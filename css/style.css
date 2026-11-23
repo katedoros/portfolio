@@ -55,7 +55,7 @@ a { color: inherit; }
 .pill:hover { background: #e6e763; }
 
 /* ===== Первый экран ===== */
-.hero { padding: 80px 0 100px; }
+.hero { padding: 50px 0 70px; }
 .hero__inner { display: grid; grid-template-columns: 1.25fr 1fr; gap: 60px; align-items: center; }
 .hero__title {
   margin: 0 0 28px; font-size: clamp(36px, 5vw, 64px); line-height: 1.08; font-weight: 700;
@@ -68,8 +68,32 @@ a { color: inherit; }
   transition: transform .2s, box-shadow .2s;
 }
 .btn-accent:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(242, 162, 74, .25); }
-.hero__media { justify-self: end; width: 100%; max-width: 420px; aspect-ratio: 9 / 16; border-radius: var(--radius); overflow: hidden; background: #000; }
-.hero__media video { width: 100%; height: 100%; object-fit: cover; }
+/* Видео 1080×2164 — показываем целиком, высота подстраивается под экран */
+.hero__media { justify-self: end; height: min(calc(100vh - 160px), 760px); min-height: 420px; aspect-ratio: 1080 / 2164; max-width: 100%; }
+.hero__media video { width: 100%; height: 100%; object-fit: contain; }
+
+/* ===== Обо мне ===== */
+.about { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; }
+.about__lead { margin: 0 0 18px; font-size: 22px; line-height: 1.5; }
+.about__lead + .about__lead { font-size: 18px; color: var(--text-muted); }
+.about__facts { display: flex; flex-wrap: wrap; gap: 12px; margin: 32px 0 40px; padding: 0; list-style: none; }
+.about__facts li { padding: 10px 18px; border: 1px solid var(--line); border-radius: 1000px; font-size: 15px; }
+.about__facts b { background: var(--accent); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.about__cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.about__card { padding: 28px; border-radius: 20px; background: var(--bg-card); }
+.about__card h3 { margin: 0 0 14px; font-size: 16px; text-transform: uppercase; letter-spacing: .02em; }
+.about__card ul { margin: 0; padding: 0; list-style: none; color: var(--text-muted); font-size: 15px; }
+.about__card li { padding: 6px 0; border-bottom: 1px solid var(--line); }
+.about__card li:last-child { border-bottom: 0; }
+.about__card small { display: block; font-size: 13px; opacity: .8; }
+@media (max-width: 960px) {
+  .about { grid-template-columns: 1fr; gap: 10px; }
+  .about__cols { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .about__lead { font-size: 18px; }
+  .about__lead + .about__lead { font-size: 16px; }
+}
 
 /* ===== Секции главной ===== */
 .section { padding: 70px 0; border-top: 1px solid var(--line); }
@@ -160,7 +184,7 @@ a { color: inherit; }
   :root { --gutter: 24px; }
   .hero { padding: 50px 0 70px; }
   .hero__inner { grid-template-columns: 1fr; gap: 40px; }
-  .hero__media { justify-self: center; max-width: 340px; }
+  .hero__media { justify-self: center; height: min(75vh, 640px); min-height: 0; }
   .gallery { grid-template-columns: repeat(3, 1fr); }
   .case-section { grid-template-columns: 1fr; gap: 14px; }
 }
@@ -183,3 +207,6 @@ a { color: inherit; }
 .case .header .logo { color: transparent; }
 .hero__inner > *, .projects > *, .case-section > * { min-width: 0; }
 .hero__title, .case__title { overflow-wrap: break-word; }
+
+/* Якоря не прячутся под липкой шапкой */
+section[id] { scroll-margin-top: 76px; }
