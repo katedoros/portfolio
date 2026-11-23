@@ -231,3 +231,10 @@ section[id] { scroll-margin-top: 76px; }
   .case__lead { margin-left: calc((100% - 40px) / 3 + 40px); max-width: none; }
 }
 @media (max-width: 640px) { .about__card li { border-radius: 14px; } }
+
+/* Баннер: без линии сверху, обводка жёлто-оранжевым градиентом */
+.cta { border-top: 0; padding-top: 20px; }
+.cta__inner {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--bg), var(--bg)) padding-box, var(--accent) border-box;
+}
