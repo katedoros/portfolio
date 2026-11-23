@@ -43,16 +43,22 @@ a { color: inherit; }
 .header__actions { display: flex; align-items: center; gap: 12px; }
 .icon-btn {
   width: 36px; height: 36px; border-radius: 50%; background: #fff; color: var(--bg);
-  display: inline-flex; align-items: center; justify-content: center; transition: transform .2s, background .2s;
+  display: inline-flex; align-items: center; justify-content: center; transition: transform .2s;
 }
-.icon-btn svg { width: 18px; height: 18px; }
-.icon-btn:hover { background: #e6e763; transform: translateY(-2px); }
+.icon-btn svg { width: 18px; height: 18px; position: relative; z-index: 1; }
 .pill {
   display: inline-flex; align-items: center; height: 36px; padding: 0 18px; border-radius: 1000px;
   background: #fff; color: var(--bg); text-decoration: none; font-size: 14px; font-weight: 500;
-  transition: background .2s;
+  transition: transform .2s;
 }
-.pill:hover { background: #e6e763; }
+/* Наведение на кнопки шапки: плавно проявляется жёлто-оранжевый градиент */
+.icon-btn, .pill { position: relative; overflow: hidden; isolation: isolate; }
+.icon-btn::before, .pill::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  background: var(--accent); opacity: 0; transition: opacity .3s ease;
+}
+.icon-btn:hover::before, .pill:hover::before { opacity: 1; }
+.icon-btn:hover, .pill:hover { transform: translateY(-2px); }
 
 /* ===== Первый экран ===== */
 .hero { padding: 50px 0 70px; }
@@ -62,12 +68,16 @@ a { color: inherit; }
   text-transform: uppercase; letter-spacing: -0.01em;
 }
 .hero__text { margin: 0 0 40px; max-width: 470px; color: var(--text-muted); font-size: 18px; }
+/* Главная кнопка: при наведении градиент плавно поворачивается */
+@property --cta-angle { syntax: '<angle>'; initial-value: 90deg; inherits: false; }
 .btn-accent {
+  --cta-angle: 90deg;
   display: inline-flex; align-items: center; height: 60px; padding: 0 40px; border-radius: 1000px;
-  background: var(--accent); color: var(--bg); font-weight: 500; font-size: 16px; text-decoration: none;
-  transition: transform .2s, box-shadow .2s;
+  background: linear-gradient(var(--cta-angle), #e6e763 0%, #f2a24a 100%);
+  color: var(--bg); font-weight: 500; font-size: 16px; text-decoration: none;
+  transition: --cta-angle .6s ease, transform .2s, box-shadow .2s;
 }
-.btn-accent:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(242, 162, 74, .25); }
+.btn-accent:hover { --cta-angle: 264deg; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(242, 162, 74, .25); }
 /* Видео 1080×2164 — показываем целиком, высота подстраивается под экран */
 .hero__media { justify-self: end; height: min(calc(100vh - 160px), 760px); min-height: 420px; aspect-ratio: 1080 / 2164; max-width: 100%; }
 .hero__media video { width: 100%; height: 100%; object-fit: contain; }
@@ -210,3 +220,13 @@ a { color: inherit; }
 
 /* Якоря не прячутся под липкой шапкой */
 section[id] { scroll-margin-top: 76px; }
+
+/* Строчка для заказчика в конце «Обо мне» */
+.about__cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; margin-top: 40px; padding: 28px 32px; border: 1px solid var(--line); border-radius: 20px; }
+.about__cta p { margin: 0; font-size: 20px; font-weight: 500; }
+@media (max-width: 640px) { .about__cta { padding: 24px; } .about__cta p { font-size: 18px; } .about__cta .btn-accent { width: 100%; justify-content: center; } }
+
+/* Вводный текст кейса — в одной колонке с остальным текстом */
+@media (min-width: 961px) {
+  .case__lead { margin-left: calc((100% - 40px) / 3 + 40px); max-width: none; }
+}
