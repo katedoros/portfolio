@@ -235,3 +235,17 @@ section[id] { scroll-margin-top: 76px; }
   border: 1px solid transparent;
   background: linear-gradient(var(--bg), var(--bg)) padding-box, var(--accent) border-box;
 }
+
+/* Отступы в «Обо мне» */
+.about__lead:last-child { margin-bottom: 0; }
+.about__rows { margin-top: 16px; }
+@media (max-width: 960px) {
+  .about .section__title { margin-bottom: 14px; }
+  .about__rows { margin-top: 30px; }
+}
+
+/* Отступы в кейсах: первый элемент текста — вровень с заголовком секции,
+   секция только с заголовком (перед картинкой) — без лишнего воздуха */
+.case-section__body > :first-child { margin-top: 0; }
+.case-section:has(.case-section__body:empty) { padding-bottom: 24px; }
+.case-section:has(.case-section__body:empty) .case-section__body { display: none; }
