@@ -249,3 +249,6 @@ section[id] { scroll-margin-top: 76px; }
 .case-section__body > :first-child { margin-top: 0; }
 .case-section:has(.case-section__body:empty) { padding-bottom: 24px; }
 .case-section:has(.case-section__body:empty) .case-section__body { display: none; }
+
+/* Текст в баннере — жёлто-оранжевым градиентом */
+.cta__text { background: var(--accent); -webkit-background-clip: text; background-clip: text; color: transparent; }
